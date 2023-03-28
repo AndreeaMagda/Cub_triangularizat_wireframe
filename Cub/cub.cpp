@@ -5,20 +5,46 @@
 #include "glaux.h"
 
 static GLfloat alfaX = 0.0f;
+static GLfloat alfaY = 0.0f;
+static GLfloat alfaZ = 0.0f;
 
 void myInit() {
     glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 
-void CALLBACK RotesteXStanga()
+
+void CALLBACK RotesteXSus()
+{
+    alfaX = alfaX + 10;
+}
+
+void CALLBACK RotesteXJos()
 {
     alfaX = alfaX - 10;
 }
 
-void CALLBACK RotesteXDreapta()
+void CALLBACK RotesteYStanga()
 {
-    alfaX = alfaX + 10;
+    alfaY = alfaY - 10;
 }
+
+void CALLBACK RotesteYDreapta()
+{
+    alfaY = alfaY + 10;
+}
+
+void CALLBACK RotesteZs()
+{
+    alfaZ = alfaZ + 10;
+}
+
+void CALLBACK RotesteZj()
+{
+    alfaZ = alfaZ - 10;
+}
+
+
+
 
 void CALLBACK display()
 {
@@ -26,16 +52,78 @@ void CALLBACK display()
 
     glLoadIdentity();
     glTranslatef(0, 0, -500.0);
-    glRotatef(30, 1.0, 1.0, 0.0);
-    glRotatef(alfaX, 1.0, 0.0, 0.0);
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glColor3f(0.50, 0, 1);
 
-    glColor3f(1, 0, 0);
-    glBegin(GL_TRIANGLES && GL_LINE);
+    glRotatef(30, 1.0, 1.0, 0.0);
+   
+    
+    glRotatef(alfaX, 1.0, 0.0, 0.0);
+    glRotatef(alfaY, 0.0, 1.0, 0.0);
+    glRotatef(alfaZ, 0.0, 0.0, 1.0);
+
+    
+    glBegin(GL_TRIANGLES);
     {
-        glVertex3f(-100.0f, 100.0f, -100.0f);
+        //spate 
+        glColor3f(0.50, 0, 1);
+        glVertex3f(100.0f, -100.0f, -300.0f);
+        glVertex3f(100.0f, 100.0f, -300.0f);
+        glVertex3f(-100.0f, -100.0f, -300.0f);
+        glVertex3f(-100.0f, -100.0f, -300.0f);
+        glVertex3f(-100.0f, 100.0f, -300.0f);
+        glVertex3f(100.0f, 100.0f, -300.0f);
+
+        //fata
+       
         glVertex3f(-100.0f, -100.0f, -100.0f);
+        glVertex3f(-100.0f, 100.0f, -100.0f);
+        glVertex3f(100.0f, -100.0f, -100.0f);
         glVertex3f(100.0f, -100.0f, -100.0f);
         glVertex3f(100.0f, 100.0f, -100.0f);
+        glVertex3f(-100.0f, 100.0f, -100.0f);
+
+        //dreapta
+
+        glVertex3f(100.0f, -100.0f, -100.0f);
+        glVertex3f(100.0f, 100.0f, -100.0f);
+        glVertex3f(100.0f, -100.0f, -300.0f);
+        glVertex3f(100.0f, -100.0f, -300.0f);
+        glVertex3f(100.0f, 100.0f, -300.0f);
+        glVertex3f(100.0f, 100.0f, -100.0f);
+
+        //stanga
+       
+        glVertex3f(-100.0f, -100.0f, -300.0f); 
+        glVertex3f(-100.0f, 100.0f, -300.0f);
+        glVertex3f(-100.0f, -100.0f, -100.0f);
+        glVertex3f(-100.0f, -100.0f, -100.0f);
+        glVertex3f(-100.0f, 100.0f, -100.0f);
+        glVertex3f(-100.0f, 100.0f, -300.0f); 
+        
+        //sus
+        
+        glVertex3f(-100.0f, 100.0f, -100.0f);
+        glVertex3f(-100.0f, 100.0f, -300.0f);
+        glVertex3f(100.0f, 100.0f, -100.0f);
+        glVertex3f(100.0f, 100.0f, -100.0f);
+        glVertex3f(100.0f, 100.0f, -300.0f);
+        glVertex3f(-100.0f, 100.0f, -300.0f);
+
+
+        //jos
+        
+        glVertex3f(-100.0f, -100.0f, -100.0f);
+        glVertex3f(-100.0f, -100.0f, -300.0f);
+        glVertex3f(100.0f, -100.0f, -100.0f);
+        glVertex3f(100.0f, -100.0f, -100.0f);
+        glVertex3f(100.0f, -100.0f, -300.0f);
+        glVertex3f(-100.0f, -100.0f, -300.0f);
+
+        
+
+        
     }
     glEnd();
 
@@ -58,8 +146,12 @@ int main(int argc, char** argv)
     auxInitPosition(0, 0, 800, 600);
     auxInitWindow("Un inceput de cub");
     myInit();
-    auxKeyFunc(AUX_q, RotesteXStanga);
-    auxKeyFunc(AUX_w, RotesteXDreapta);
+    auxKeyFunc(AUX_q, RotesteXSus);
+    auxKeyFunc(AUX_a, RotesteXJos);
+    auxKeyFunc(AUX_w, RotesteYStanga);
+    auxKeyFunc(AUX_s, RotesteYDreapta);
+    auxKeyFunc(AUX_e, RotesteZs);
+    auxKeyFunc(AUX_d, RotesteZj);
 
     auxReshapeFunc(myReshape);
     auxMainLoop(display);
